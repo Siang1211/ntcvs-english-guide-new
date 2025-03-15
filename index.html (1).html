@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統測英文通關寶典 - 台南高商劉翔承製作</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #059669;
+            --accent-color: #dc2626;
+            --background-color: #f8fafc;
+            --card-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 1.8rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .nav-links button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+        
+        .nav-links button.active {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-color);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card h3 {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .section {
+            display: none;
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 9999px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .search-bar:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .word-card {
+            background: var(--card-color);
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .word-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+        
+        .word-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .word-card .phonetic {
+            color: var(--text-secondary);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .exam-tag {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .translation {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #e2e8f0;
+            display: none;
+        }
+        
+        .translation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .grammar-section {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .grammar-point {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .grammar-point h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .example {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        
+        .quiz-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-question {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .quiz-option {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-option:hover {
+            background: #f8fafc;
+            border-color: var(--primary-color);
+        }
+        
+        .quiz-option.correct {
+            background: #dcfce7;
+            border-color: var(--success-color);
+        }
+        
+        .quiz-option.wrong {
+            background: #fee2e2;
+            border-color: var(--error-color);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .flashcard-container {
+            perspective: 1000px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>統測英文通關寶典</h1>
+        <div class="nav-links">
+            <button class="active">單字學習</button>
+            <button>文法重點</button>
+            <button>模擬測驗</button>
+            <button>學習進度</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <div class="stat-card">
+                <h3>已學習單字</h3>
+                <div class="number">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>完成測驗</h3>
+                <div class="number">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>正確率</h3>
+                <div class="number">0%</div>
+            </div>
+        </div>
+
+        <!-- 單字學習區塊 -->
+        <div class="section active" id="vocabulary-section">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="搜尋單字...">
+            </div>
+            <div class="word-grid">
+                <div class="word-card">
+                    <h3>abandon</h3>
+                    <span class="phonetic">/əˈbændən/</span>
+                    <span class="exam-tag">111統測</span>
+                    <div class="translation">
+                        <p>v. 放棄、遺棄</p>
+                        <p>例句：He would never abandon his dream of becoming a doctor.</p>
+                        <p>他永遠不會放棄成為醫生的夢想。</p>
+                    </div>
+                </div>
+                
+                <div class="word-card">
+                    <h3>brilliant</h3>
+                    <span class="phonetic">/ˈbrɪljənt/</span>
+                    <span class="exam-tag">110統測</span>
+                    <div class="translation">
+                        <p>adj. 傑出的、燦爛的</p>
+                        <p>例句：She came up with a brilliant solution to the problem.</p>
+                        <p>她想出了一個絕妙的解決方案。</p>
+                    </div>
+                </div>
+                
+                <div class="word-card">
+                    <h3>confident</h3>
+                    <span class="phonetic">/ˈkɒnfɪdənt/</span>
+                    <span class="exam-tag">112統測</span>
+                    <div class="translation">
+                        <p>adj. 自信的、有把握的</p>
+                        <p>例句：He feels confident about passing the exam.</p>
+                        <p>他對通過考試很有信心。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文法重點區塊 -->
+        <div class="section" id="grammar-section">
+            <div class="grammar-point">
+                <h3>現在完成式 (Present Perfect)</h3>
+                <p>用法：描述過去發生但與現在有關連的動作，或持續到現在的狀態。</p>
+                <p>結構：have/has + 過去分詞</p>
+                <div class="example">
+                    <p>I have lived in Taipei for 10 years.</p>
+                    <p>我在台北住了10年了。（現在還住在這裡）</p>
+                </div>
+                <div class="example">
+                    <p>She has already finished her homework.</p>
+                    <p>她已經完成她的作業了。</p>
+                </div>
+            </div>
+
+            <div class="grammar-point">
+                <h3>被動語態 (Passive Voice)</h3>
+                <p>用法：強調動作的接受者，而非執行者。</p>
+                <p>結構：be + 過去分詞</p>
+                <div class="example">
+                    <p>This book was written by a famous author.</p>
+                    <p>這本書是由一位著名作家所寫的。</p>
+                </div>
+                <div class="example">
+                    <p>The letter will be sent tomorrow.</p>
+                    <p>這封信明天會被寄出。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模擬測驗區塊 -->
+        <div class="section" id="quiz-section">
+            <div class="quiz-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3>Question 1</h3>
+                    <p>The museum _______ to the public until 5 PM today.</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option">A) is opening</div>
+                        <div class="quiz-option">B) is opened</div>
+                        <div class="quiz-option correct">C) is open</div>
+                        <div class="quiz-option">D) opens</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">
+                    <h3>Question 2</h3>
+                    <p>If I _______ you, I would take the job offer.</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option">A) am</div>
+                        <div class="quiz-option correct">B) were</div>
+                        <div class="quiz-option">C) would be</div>
+                        <div class="quiz-option">D) had been</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 學習進度區塊 -->
+        <div class="section" id="progress-section">
+            <div class="stat-card">
+                <h3>總體學習進度</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 35%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切換不同區段的顯示
+        document.querySelectorAll('.nav-links button').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                // 移除所有 active 類別
+                document.querySelectorAll('.nav-links button').forEach(btn => 
+                    btn.classList.remove('active')
+                );
+                document.querySelectorAll('.section').forEach(section => 
+                    section.classList.remove('active')
+                );
+                
+                // 添加 active 到當前按鈕和對應區段
+                button.classList.add('active');
+                document.querySelectorAll('.section')[index].classList.add('active');
+            });
+        });
+
+        // 單字卡片點擊展開/收起
+        document.querySelectorAll('.word-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const translation = card.querySelector('.translation');
+                translation.classList.toggle('show');
+            });
+        });
+
+        // 搜尋功能
+        document.querySelector('.search-bar').addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            document.querySelectorAll('.word-card').forEach(card => {
+                const word = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = word.includes(searchText) ? 'block' : 'none';
+            });
+        });
+
+        // 測驗選項點擊
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const options = option.parentElement.querySelectorAll('.quiz-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                if (option.classList.contains('correct')) {
+                    option.classList.add('correct');
+                } else {
+                    option.classList.add('wrong');
+                    option.parentElement.querySelector('.correct').classList.add('correct');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
